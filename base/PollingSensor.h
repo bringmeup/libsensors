@@ -18,6 +18,7 @@ class PollingSensor: public Sensor {
     std::chrono::nanoseconds mPeriod;
     std::ifstream mInfile;
     std::string mInfileName;
+    sensors_event_t mSensorData;
 public:
     PollingSensor(sensor_t sensor, events_que_t& queue, std::string filename);
     virtual ~PollingSensor();
@@ -27,6 +28,8 @@ public:
     virtual int setDelay(int ns);
 
     void run();
+protected:
+    virtual void fillRawValue(sensors_event_t& data, int raw);
 };
 
 #endif /* POLLINGSENSOR_H_ */

@@ -5,7 +5,6 @@
  *      Author: nazgee
  */
 
-#include <utils/Log.h>
 #include <cstdint>
 #include "Sensor.h"
 
@@ -36,22 +35,22 @@ int64_t Sensor::getTimestamp() {
 }
 
 int Sensor::activate(int enabled) {
-    DEBUG("this=%p, enabled=%d", this, enabled);
+    INFO("this=%p, enabled=%d", this, enabled);
     return 0;
 }
 
 int Sensor::setDelay(int ns) {
-    DEBUG("this=%p, ns=%d", this, ns);
+    INFO("this=%p, ns=%d", this, ns);
     return 0;
 }
 
 int Sensor::batch(int flags, int64_t period_ns, int64_t timeout) {
-    DEBUG("this=%p, flags=%d, period_ns=%lld, timeout=%lld", this, flags, period_ns, timeout);
+    INFO("this=%p, flags=%d, period_ns=%lld, timeout=%lld", this, flags, period_ns, timeout);
     return 0;
 }
 
 int Sensor::flush() {
-    DEBUG("this=%p", this);
+    INFO("this=%p", this);
     return 0;
 }
 

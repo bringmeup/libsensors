@@ -7,7 +7,6 @@
 
 #include "PollingSensor.h"
 
-#include <utils/Log.h>
 #include <utils/Timers.h>
 #include <cutils/properties.h>
 #include <cutils/log.h>
@@ -28,7 +27,7 @@ PollingSensor::PollingSensor(sensor_t sensor, events_que_t& queue, std::string f
     if (!mInfile.is_open()) {
         ALOGE("Failed to open %s", mInfileName.c_str());
     } else {
-        DEBUG("Opened %s", mInfileName.c_str());
+        INFO("Opened %s", mInfileName.c_str());
     }
 }
 
@@ -39,7 +38,7 @@ PollingSensor::~PollingSensor() {
 int PollingSensor::activate(int enabled) {
     std::lock_guard<std::mutex> lk(mMutex);
 
-    DEBUG("this=%p, enabled=%d", this, enabled);
+    INFO("this=%p, enabled=%d", this, enabled);
 
     if (!mInfile.is_open()) {
         ALOGE("Failed to read from sensor file, not activating");
@@ -90,13 +89,16 @@ void PollingSensor::run() {
     DEBUG("value=%d", value);
 
     auto handle = reinterpret_cast<std::int32_t>(this);
-    mQueue.push(sensors_event_t {
-        .version = sizeof(sensors_event_t),
-        .sensor = handle,
-        .type = SENSOR_TYPE_LIGHT,
-        .timestamp = getTimestamp(),
-        .light = static_cast<float>(value),
-    });
 
+    mSensorData.version = sizeof(sensors_event_t);
+    mSensorData.sensor = handle;
+    mSensorData.type = SENSOR_TYPE_LIGHT;
+    mSensorData.timestamp = getTimestamp();
+    fillRawValue(mSensorData, value);
+
+    mQueue.push(mSensorData);
 }
 
+void PollingSensor::fillRawValue(sensors_event_t& data, int raw) {
+    data.light = static_cast<float>(raw);
+}

@@ -8,16 +8,20 @@
 #ifndef UTIL_H_
 #define UTIL_H_
 
+#include <utils/Log.h>
 #include <semaphore.h>
 #include <mutex>
+#include <thread>
 
-#define SENSOR_DEBUG
+//#define SENSOR_DEBUG
 
 #ifdef SENSOR_DEBUG
 #define DEBUG(format, ...) ALOGD("%s " format, __FUNCTION__, ## __VA_ARGS__)
 #else
 #define DEBUG(format, ...)
 #endif
+
+#define INFO(format, ...) ALOGI("%s " format, __FUNCTION__, ## __VA_ARGS__)
 
 class SafeThread {
     typedef std::function<void()> worker_t;

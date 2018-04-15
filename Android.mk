@@ -31,6 +31,7 @@ LOCAL_CFLAGS += -std=c++11
 
 LOCAL_SRC_FILES :=    \
   sensors.cpp         \
+  base/Approximator.cpp    \
   base/Sensor.cpp          \
   base/PollingSensor.cpp   \
   base/SensorsManager.cpp  \

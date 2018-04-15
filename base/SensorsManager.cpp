@@ -7,7 +7,6 @@
 
 
 #include <string.h>
-#include <utils/Log.h>
 #include <utils/Timers.h>
 #include <chrono>
 #include <thread>
